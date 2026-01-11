@@ -126,7 +126,18 @@ class AppPackageMakerDeb extends AppPackageMaker {
     if (!desktopEntryFile.existsSync()) desktopEntryFile.createSync();
 
     await controlFile.writeAsString(files['CONTROL']!);
-    await desktopEntryFile.writeAsString(files['DESKTOP']!);
+    
+    // Use custom desktop file if specified, otherwise use generated content
+    if (makeConfig.desktopFile != null) {
+      final customDesktopFile = File(path.join(Directory.current.path, makeConfig.desktopFile!));
+      if (!customDesktopFile.existsSync()) {
+        throw MakeError("Desktop file ${makeConfig.desktopFile} path wasn't found");
+      }
+      await customDesktopFile.copy(desktopEntryFile.path);
+    } else {
+      await desktopEntryFile.writeAsString(files['DESKTOP']!);
+    }
+    
     await postinstFile.writeAsString(files['postinst']!);
     await postrmFile.writeAsString(files['postrm']!);
 

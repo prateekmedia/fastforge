@@ -86,7 +86,16 @@ class AppPackageMakerAppImage extends AppPackageMaker {
         ),
       )..createSync(recursive: true);
 
-      await desktopFile.writeAsString(makeConfig.desktopFileContent);
+      // Use custom desktop file if specified, otherwise use generated content
+      if (makeConfig.desktopFile != null) {
+        final customDesktopFile = File(path.join(Directory.current.path, makeConfig.desktopFile!));
+        if (!customDesktopFile.existsSync()) {
+          throw MakeError("Desktop file ${makeConfig.desktopFile} path wasn't found");
+        }
+        await customDesktopFile.copy(desktopFile.path);
+      } else {
+        await desktopFile.writeAsString(makeConfig.desktopFileContent);
+      }
 
       final appRunFile = File(
         path.join(

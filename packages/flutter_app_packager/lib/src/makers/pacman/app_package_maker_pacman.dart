@@ -122,7 +122,17 @@ class AppPackageMakerPacman extends AppPackageMaker {
 
     await installFile.writeAsString(files['INSTALL']!);
     await pkgInfoFile.writeAsString(files['PKGINFO']!);
-    await desktopEntryFile.writeAsString(files['DESKTOP']!);
+    
+    // Use custom desktop file if specified, otherwise use generated content
+    if (makeConfig.desktopFile != null) {
+      final customDesktopFile = File(path.join(Directory.current.path, makeConfig.desktopFile!));
+      if (!customDesktopFile.existsSync()) {
+        throw MakeError("Desktop file ${makeConfig.desktopFile} path wasn't found");
+      }
+      await customDesktopFile.copy(desktopEntryFile.path);
+    } else {
+      await desktopEntryFile.writeAsString(files['DESKTOP']!);
+    }
 
     // copy the application binary to /usr/share/$appBinaryName
     await $('cp', [

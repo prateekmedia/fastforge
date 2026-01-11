@@ -15,6 +15,7 @@ class MakeRPMConfig extends MakeConfig {
     this.genericName,
     this.icon,
     this.metainfo,
+    this.desktopFile,
     this.keywords,
     this.supportedMimeType,
 
@@ -47,6 +48,7 @@ class MakeRPMConfig extends MakeConfig {
       icon: json['icon'] as String?,
       includeBuildNumber: json['include_build_number'] as bool? ?? true,
       metainfo: json['metainfo'] as String?,
+      desktopFile: json['desktop_file'] as String?,
       genericName: json['generic_name'] as String?,
       startupNotify: json['startup_notify'] as bool?,
       startupWMClass: json['startup_wm_class'] as String?,
@@ -83,6 +85,7 @@ class MakeRPMConfig extends MakeConfig {
   String displayName;
   String? icon;
   String? metainfo;
+  String? desktopFile;
   String? genericName;
   bool? startupNotify;
   String? startupWMClass;

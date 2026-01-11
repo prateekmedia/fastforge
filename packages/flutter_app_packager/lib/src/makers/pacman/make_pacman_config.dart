@@ -116,6 +116,7 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
     this.licenses = const ['unknown'],
     this.icon,
     this.metainfo,
+    this.desktopFile,
     this.keywords,
     this.provides,
     this.conflicts,
@@ -183,6 +184,7 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
       installedSize: map['installed_size'],
       icon: map['icon'],
       metainfo: map['metainfo'],
+      desktopFile: map['desktop_file'],
     );
   }
 
@@ -195,6 +197,7 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
   List<String> groups;
   String? icon;
   String? metainfo;
+  String? desktopFile;
   String? genericName;
   bool startupNotify;
   String? startupWMClass;

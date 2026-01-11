@@ -90,6 +90,10 @@ postuninstall_scripts:
 # application icon path relative to project url
 icon: assets/logo.png
 
+# path to custom desktop file (optional)
+# if specified, this file will be used instead of generating one
+desktop_file: linux/packaging/myapp.desktop
+
 keywords:
   - Hello
   - World
@@ -146,6 +150,7 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
     this.genericName,
     this.icon,
     this.metainfo,
+    this.desktopFile,
     this.keywords,
     this.preDependencies,
     this.provides,
@@ -226,6 +231,7 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
       installedSize: map['installed_size'],
       icon: map['icon'],
       metainfo: map['metainfo'],
+      desktopFile: map['desktop_file'],
     );
   }
 
@@ -239,6 +245,7 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
   bool? essential;
   String? icon;
   String? metainfo;
+  String? desktopFile;
   String? genericName;
   bool? startupNotify;
   String? startupWMClass;
